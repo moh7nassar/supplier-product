@@ -1,0 +1,56 @@
+﻿@model SupplierReport
+
+@{
+    ViewData["Title"] = "SupplierReport";
+}
+
+<h1>Supplier Report</h1>
+
+<form asp-action="SupplierReport">
+    <div class="row">
+        <div class="form-group col-2">
+            <label asp-for="Name"></label>
+        </div>
+        <div class="form-group col-8">
+            <input asp-for="Name" class="form-control" />
+        </div>
+        <div class="form-group col-2 ">
+            <input type="submit" value="Search" class="btn btn-success" />
+        </div>
+    </div>
+</form>
+
+<div class="card text-white bg-success mb-3" style="max-width: 200rem;">
+    <div class="card-header">Supplier Summary Report</div>
+    <div class="card-body">
+        @if (Model.Suppliers is null || Model.Suppliers.Count() == 0)
+        {
+            <div class="alert alert-dismissible alert-warning">
+                <h4 class="alert-heading">Warning!</h4>
+                <p class="mb-0">No Supplier Match</p>
+            </div>
+        }
+        else
+        {
+            foreach (var supplier in Model.Suppliers)
+            {
+                double x=0;
+                <div class="card text-white bg-info mb-3" style="max-width: 100rem;">
+                    <div class="card-header">@supplier.Name</div>
+                    <div class="card-body">
+                        @foreach (var order in supplier.Orders)
+                        {
+
+                            x += order.Product.Price;
+                            <h4 class="card-title">
+                                @order.Product.Title | $@order.Product.Price
+                            </h4>
+                        }
+                        <h5>Total Price: @x</h5>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+

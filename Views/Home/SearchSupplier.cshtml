@@ -1,0 +1,79 @@
+﻿@model SearchSupplier
+
+@{
+    ViewData["Title"] = "View";
+}<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div class="form-group">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control" />
+            </div>
+            <input type="submit" value="Search" class="btn btn-success" />
+        </form>
+    </div>
+</div>
+<hr />
+<h3>Search Result</h3>
+<hr />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                Address
+            </th>
+            <th>
+                Country
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Phone
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Suppliers is null || Model.Suppliers.Count() == 0)
+        {
+            <tr>
+                <td colspan="2">
+                    No Suppliers Found!
+                </td>
+            </tr>
+        }
+        else
+        {
+            @foreach (var item in Model.Suppliers)
+            {
+                <tr>
+                    <td>
+                        @item.Name
+                    </td>
+                    <td>
+                        @item.Address
+                    </td>
+                    <td>
+                        @item.Country
+                    </td>
+                    <td>
+                        @item.Email
+                    </td>
+                    <td>
+                        @item.Phone
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.SupplierId">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.SupplierId">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.SupplierId">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

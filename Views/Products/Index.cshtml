@@ -1,0 +1,70 @@
+﻿@model IEnumerable<FinalProject.Models.Product>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Products</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-secondary">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-route-SortBy="title_asc">
+                    <img src="~/images/ascendingg.png" width="32" height="32" alt="Sort Ascending" />
+                </a>
+
+                <label asp-for="@Model.FirstOrDefault().Title"></label>
+
+                <a asp-route-SortBy="title_desc">
+                    <img src="~/images/descendingg.png" width="32" height="32" alt="Sort Descending" />
+                </a>
+            </th>
+            <th>
+                <a asp-route-SortBy="title_asc">
+                    <img src="~/images/ascendingg.png" width="32" height="32" alt="Sort Ascending" />
+                </a>
+
+                <label asp-for="@Model.FirstOrDefault().Price"></label>
+
+                <a asp-route-SortBy="title_desc">
+                    <img src="~/images/descendingg.png" width="32" height="32" alt="Sort Descending" />
+                </a>
+            </th>
+            <th>
+                <label asp-for="@Model.FirstOrDefault().Photo"></label>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @item.Title
+            </td>
+            <td>
+                @item.Price
+            </td>
+            <td>
+                @if (item.Photo is null)
+                {
+                    <img src="~/images/headphone.png" class="img-thumbnail" width="32" height="32" />
+                }
+                else
+                {
+                    <img src="@item.Photo" class="img-thumbnail" width="32" height="32" />
+                }
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
